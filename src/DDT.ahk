@@ -22,13 +22,17 @@ Loop, Parse, content, `n, `r
     boss_list := boss_list "|" line1
 }
 
-Gui, settings: New
-Gui, settings: Add, DropDownList, w150 vBossName, 
+
+Gui, settings: New, +AlwaysOnTop -Resize, Boss Selection
+Gui, settings: Add, Picture, h880 w1720, skibidi4.png
+Gui, settings: Add, Text,, Select Boss:
+Gui, settings: Add, DDL, w200 vBossName
 Gui, settings: Add, Button, gButtonOK, OK
+Gui, settings: Add, Button, gButtonCancel, Skibidi
 
 global ColorBlind := "Normal"
 global brightnessLevel := 7
-global settingsGUIHotkey := "F5"  ; default settings
+global settingsGUIHotkey := "F3"  ; default settings
 global startAndStopDPS := "F2"
 global reloadScriptHotkey := "F4"
 global includeDPSCalculations := 1
@@ -577,7 +581,14 @@ FormatWithCommas(number)
 
 ButtonOK:
     Gui, settings: Submit
+    MsgBox, You selected: %BossName%
     Gui, settings: Hide
+    calculateDPS(BossName)
+return
+
+ButtonCancel:
+    Gui, settings: Hide
+    MsgBox, 6, Never gonna give you up, never gonna let you down`n Never gonna run around and desert you`n Never gonna make you cry, never gonna say goodbye`n Never gonna tell a lie and hurt you
     calculateDPS(BossName)
 return
 
